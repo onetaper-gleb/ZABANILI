@@ -5,7 +5,7 @@ MAIN_MENU_USER = InlineKeyboardBuilder()\
 
 MAIN_MENU_USER.add(types.InlineKeyboardButton(
     text="Дальше",
-    callback_data="start_registration")
+    callback_data="main_menu_user")
 )
 
 MAIN_MENU_USER.adjust(1)

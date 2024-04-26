@@ -3,8 +3,9 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
+from magic_filter import F
 
-from core.handlers.basic import welcoming_message
+from core.handlers.basic import welcoming_message, menu_user
 from core.settings import settings
 from core.utills.commands import set_commands
 
@@ -27,8 +28,7 @@ async def start():
     dp.startup.register(start_bot)
     dp.shutdown.register(end_bot)
     dp.message.register(welcoming_message, Command(commands=['start']))
-
-
+    dp.callback_query.register(menu_user, F.data == 'main_menu_user')
 
     try:
         await dp.start_polling(bot)
