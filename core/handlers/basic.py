@@ -3,7 +3,7 @@ from aiogram import Bot
 from aiogram.types import Message, CallbackQuery
 
 from core.classes import User
-from core.handlers.basic_user import main_menu
+from core.handlers.basic_user import main_menu, got_ID
 from core.keyboards.reply import MAIN_MENU_USER
 
 users = pygame.sprite.Group()
@@ -29,7 +29,7 @@ async def reg_messsage(message: Message, bot: Bot):
         if i.id == id_us:
             match i.action_list[-1][0]:
                 case 'main_menu':
-                    break
+                    await got_ID_user(message)
                 case _:
                     pass
 
@@ -38,3 +38,22 @@ async def reg_messsage(message: Message, bot: Bot):
 async def menu_user(call: CallbackQuery):
     await main_menu(call, users)
 
+
+async def got_ID_user(message: Message):
+    await got_ID(message, users)
+
+
+async def test_q_user(message: Message):
+    pass
+
+
+async def test_q_2_user(call: CallbackQuery):
+    pass
+
+
+async def write_q_user(message: Message):
+    pass
+
+
+async def write_q_2_user(call: CallbackQuery):
+    pass

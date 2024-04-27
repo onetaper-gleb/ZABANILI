@@ -9,6 +9,4 @@ class User(pygame.sprite.Sprite):
         self.chat_id = chat_id
         self.action_list = [script]
         self.registered = []
-
-    def in_bd(self):
-        pass
+        self.answers = []
