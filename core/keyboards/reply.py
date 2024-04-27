@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 MAIN_MENU_USER = InlineKeyboardBuilder()\
@@ -21,6 +22,7 @@ FINISHED.add(types.InlineKeyboardButton(
 FINISHED.adjust(1)
 ###############################################
 
+
 def create_reply(answers, nums):
     KEYBOAD = InlineKeyboardBuilder()
 
@@ -33,3 +35,49 @@ def create_reply(answers, nums):
     KEYBOAD.adjust(2)
 
     return KEYBOAD
+
+################################################
+
+MAIN_MENU_ADMIN = InlineKeyboardBuilder()\
+
+MAIN_MENU_ADMIN.add(types.InlineKeyboardButton(
+    text="Посмотреть Опросы",
+    callback_data="View_polls")
+)
+
+MAIN_MENU_ADMIN.add(types.InlineKeyboardButton(
+    text="Создать Опрос",
+    callback_data="Create_poll")
+)
+
+
+MAIN_MENU_ADMIN.adjust(2)
+
+###########################################
+
+INFO_INLINE = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(
+            text="Изменить",
+            callback_data="change_call"
+        )
+    ],
+    [
+        InlineKeyboardButton(
+            text="Закрыть опрос",
+            callback_data="close_call"
+        )
+    ],
+    [
+        InlineKeyboardButton(
+            text="Просмотреть карту",
+            callback_data="view_call"
+        )
+    ],
+    [
+        InlineKeyboardButton(
+            text="Показ в Exel",
+            callback_data="exel_call"
+        )
+    ]
+])

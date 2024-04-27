@@ -68,6 +68,13 @@ def db_append(iq, user_answers, user_name=''):
     con.commit()
 
 
+def adminer(tg):
+    for i in S_F('teg', 'Admins'):
+        if tg in i:
+            return True
+    return False
+
+
 print(get_codes('1111'))
 name_table = S_F_W('name_table_question', 'Surveys', f'code = {str(1111)}')[0][0]
 print(S_F('question', name_table)[0][0])
