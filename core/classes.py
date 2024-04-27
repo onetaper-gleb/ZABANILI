@@ -10,3 +10,4 @@ class User(pygame.sprite.Sprite):
         self.action_list = [script]
         self.registered = []
         self.answers = []
+        self.q = ''

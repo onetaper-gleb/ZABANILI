@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 
 
@@ -33,6 +34,38 @@ WHERE {where}""").fetchall()
     con.commit()
     con.close()
     return result
+
+
+def find_q(id, ans, iq):
+    ans = S_F_W(['question', 'type', 'answers', 'id'], iq, f'(required_answer = "{ans}" AND required_question = "{id}")')
+    if ans:
+        return ans[0]
+    else:
+        return False
+
+
+def find_q_1(id, iq):
+    ans = S_F_W(['question', 'type', 'answers', 'id'], iq, f'required_question = "{id}"')
+    if ans:
+        return ans[0]
+    else:
+        return False
+
+
+def db_append(iq, user_answers, user_name=''):
+    con = sqlite3.connect('./Questionnaire.db')
+    cur = con.cursor()
+    k = cur.execute(f'''SELECT id FROM {iq}''').fetchall()
+    kol_qu = len(k)
+    us_an = []
+    for ind in range(1, kol_qu + 1):
+        if ind in user_answers:
+            us_an.append(user_answers[ind])
+        else:
+            us_an.append('None')
+
+    cur.execute(f'''INSERT INTO Answers_1(user_answers, user_name, poll_datetime) VALUES('{'_-_'.join(us_an)}', '{user_name}', '{datetime.datetime.now()}')''')
+    con.commit()
 
 
 print(get_codes('1111'))
