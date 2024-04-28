@@ -6,8 +6,8 @@ from aiogram.filters import Command
 from aiogram import F
 
 from core.handlers.basic import welcoming_message, menu_user, reg_messsage, q_2_type_user, polls_see_admin, \
-    create_name_admin, need_question_admin
-from core.handlers.basic_admin import need_question
+    create_name_admin, need_question_admin, view_call_admin, exel_call_admin
+from core.handlers.basic_admin import need_question, view_call
 from core.settings import settings
 from core.utills.commands import set_commands
 
@@ -33,6 +33,8 @@ async def start():
     dp.callback_query.register(menu_user, F.data == 'main_menu_user')
     dp.callback_query.register(polls_see_admin, F.data == 'View_polls')
     dp.callback_query.register(create_name_admin, F.data == 'Create_poll')
+    dp.callback_query.register(view_call_admin, F.data == 'view_call')
+    dp.callback_query.register(exel_call_admin, F.data == 'exel_call')
     dp.callback_query.register(need_question_admin, F.data.startswith('que'))
     dp.message.register(reg_messsage, F.text)
     dp.callback_query.register(q_2_type_user)

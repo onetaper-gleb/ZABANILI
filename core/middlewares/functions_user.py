@@ -2,6 +2,8 @@ import datetime
 import sqlite3
 from random import randint
 
+import xlwt
+
 
 def get_codes(code):
     result = S_F('code', 'Surveys')
@@ -117,3 +119,56 @@ def make_new_tables():
         f"""CREATE TABLE Answers_{mmm} (id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, user_organization TEXT, user_answers TEXT, poll_datetime TEXT) """)
     code = randint(1000, 10000)
     return mmm, code
+
+
+def export_to_xls(ans_table_name, qu_table_name):
+    book = xlwt.Workbook(encoding="utf-8")
+    sheet1 = book.add_sheet("Python Sheet 1")
+
+    con = sqlite3.connect('./Questionnaire.db')
+    cur = con.cursor()
+    table_ans = cur.execute(f'''SELECT * FROM {ans_table_name}''').fetchall()
+    questions = cur.execute(f'''SELECT question FROM {qu_table_name}''').fetchall()
+
+    #  Верхний колонтикул
+    sheet1.write(0, 0, "Имя пользователя")
+    sheet1.write(0, 1, "Организация")
+    for i in range(len(questions)):
+        sheet1.write(0, i + 2, questions[i])
+    sheet1.write(0, i + 3, "Дата и время прохождения")
+
+    #  Основное содержимое
+    for el in table_ans:
+        id, us_name, org, us_ans, date = el
+        user_answers_list = us_ans.split('_-_')
+        sheet1.write(id, 0, us_name)
+        sheet1.write(id, 1, org)
+        for k in range(len(user_answers_list)):
+            if user_answers_list[k] != 'None':
+                sheet1.write(id, k + 2, user_answers_list[k])
+        sheet1.write(id, k + 3, date)
+
+    book.save("User_answers.xls")
+
+
+def exel(bd, count):
+    sp = []
+    sp2 = []
+    sp3 = []
+
+    conn = sqlite3.connect(bd)
+    cursor = conn.cursor()
+
+    cursor.execute("""select * from sqlite_master where type = 'table'""")
+    tables = cursor.fetchall()
+
+    for table in tables:
+        sp.append(table[1])
+
+    for el in sp:
+        if len(el.split("_")) > 1:
+            sp2.append(el.split("_"))
+    for el in sp2:
+        if str(el[-1]) == str(count):
+            sp3.append(f"{el[0]}_{el[-1]}")
+    return sp3

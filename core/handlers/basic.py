@@ -4,7 +4,7 @@ from aiogram.types import Message, CallbackQuery
 
 from core.classes import User
 from core.handlers.basic_admin import polls_see, poll_see, create_name, starter, need_question, link_id, cycle, \
-    link_answer, mes_poll
+    link_answer, mes_poll, view_call, exel_call
 from core.handlers.basic_user import main_menu, got_ID, q_1_type, q_2_type
 from core.keyboards.reply import MAIN_MENU_USER, MAIN_MENU_ADMIN
 from core.middlewares.functions_user import adminer
@@ -15,7 +15,6 @@ users = pygame.sprite.Group()
 # Скрипт приветствует пользователя и добаляет его экземпляр в группу классов users
 async def welcoming_message(message: Message):
     await message.delete()
-    print(adminer(f'@{message.from_user.username}'), f'@{message.from_user.username}')
     if not adminer(f'@{message.from_user.username}'):
         await message.answer(f'Добрый день, {message.from_user.full_name}.', reply_markup=MAIN_MENU_USER.as_markup())
     else:
@@ -104,3 +103,11 @@ async def link_answer_admin(message: Message):
 
 async def mes_poll_admin(message: Message):
     await mes_poll(message, users)
+
+
+async def view_call_admin(call: CallbackQuery):
+    await view_call(call, users)
+
+
+async def exel_call_admin(call: CallbackQuery):
+    await exel_call(call, users)

@@ -22,7 +22,10 @@ async def got_ID(message: Message, users):
             await message.delete()
             await i.action_list[-1][-1].delete()
             if get_codes(message.text):
-                name_table = S_F_W('name_table_question', 'Surveys', f'code = {message.text}')[0][0]
+                print(message.text)
+                name_table = S_F_W('name_table_question', 'Surveys', f'code = "{message.text}"')
+                print(name_table)
+                name_table = name_table[0][0]
                 first_q = S_F(['question', 'type', 'answers', 'id'], name_table)[0]
                 i.q = name_table
                 if first_q[1] == 'write':
@@ -77,6 +80,7 @@ async def q_2_type(call: CallbackQuery, users):
                 if sp[1] == 'write':
                     i.action_list.append(['got_ID', await call.message.answer(f'''{sp[0]}''')])
                 else:
+                    print(sp[2], sp)
                     reply = create_reply(sp[2].split('_-_'), sp[3])
                     i.action_list.append(
                         ['got_ID', await call.message.answer(f'''{sp[0]}''', reply_markup=reply.as_markup())])

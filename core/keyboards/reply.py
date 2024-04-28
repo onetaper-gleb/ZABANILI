@@ -58,16 +58,6 @@ MAIN_MENU_ADMIN.adjust(2)
 INFO_INLINE = InlineKeyboardBuilder()\
 
 INFO_INLINE.add(types.InlineKeyboardButton(
-    text="Изменить",
-    callback_data="change_call")
-)
-
-INFO_INLINE.add(types.InlineKeyboardButton(
-    text="Закрыть опрос",
-    callback_data="close_call")
-)
-
-INFO_INLINE.add(types.InlineKeyboardButton(
     text="Просмотреть карту",
     callback_data="view_call")
 )
@@ -106,3 +96,14 @@ F_BACK.add(types.InlineKeyboardButton(
 )
 
 F_BACK.adjust(1)
+
+############################
+
+CHOOSE = InlineKeyboardBuilder()\
+
+CHOOSE.add(types.InlineKeyboardButton(
+    text="Главное меню",
+    callback_data="View_polls")
+)
+
+CHOOSE.adjust(1)
