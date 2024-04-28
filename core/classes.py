@@ -11,3 +11,5 @@ class User(pygame.sprite.Sprite):
         self.registered = []
         self.answers = []
         self.q = ''
+        self.poll = []
+        self.anws = []

@@ -3,7 +3,8 @@ from aiogram import Bot
 from aiogram.types import Message, CallbackQuery
 
 from core.classes import User
-from core.handlers.basic_admin import polls_see
+from core.handlers.basic_admin import polls_see, poll_see, create_name, starter, need_question, link_id, cycle, \
+    link_answer, mes_poll
 from core.handlers.basic_user import main_menu, got_ID, q_1_type, q_2_type
 from core.keyboards.reply import MAIN_MENU_USER, MAIN_MENU_ADMIN
 from core.middlewares.functions_user import adminer
@@ -38,6 +39,18 @@ async def reg_messsage(message: Message, bot: Bot):
                     await got_ID_user(message)
                 case 'got_ID':
                     await q_1_type_user(message)
+                case 'polls_see':
+                    await poll_see_admin(message)
+                case 'create_name':
+                    await starter_admin(message)
+                case 'need_question':
+                    await link_id_admin(message)
+                case 'cycle':
+                    await cycle_admin(message)
+                case 'link_id':
+                    await link_answer_admin(message)
+                case 'link_answer':
+                    await mes_poll_admin(message)
 
 
 # Вызываем функцию из basic_user, отвечающую за регистрацию
@@ -58,5 +71,36 @@ async def q_2_type_user(call: CallbackQuery):
 
 
 async def polls_see_admin(call: CallbackQuery):
-    print('smth1')
     await polls_see(call, users)
+
+
+async def poll_see_admin(message: Message):
+    await poll_see(message, users)
+
+
+async def create_name_admin(call: CallbackQuery):
+    await create_name(call, users)
+
+
+async def starter_admin(message: Message):
+    await starter(message, users)
+
+
+async def need_question_admin(call: CallbackQuery):
+    await need_question(call, users)
+
+
+async def link_id_admin(message: Message):
+    await link_id(message, users)
+
+
+async def cycle_admin(message: Message):
+    await cycle(message, users)
+
+
+async def link_answer_admin(message: Message):
+    await link_answer(message, users)
+
+
+async def mes_poll_admin(message: Message):
+    await mes_poll(message, users)

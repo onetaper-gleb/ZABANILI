@@ -22,7 +22,7 @@ async def got_ID(message: Message, users):
             await message.delete()
             await i.action_list[-1][-1].delete()
             if get_codes(message.text):
-                name_table = S_F_W('name_table_question', 'Surveys', f'code = {str(1111)}')[0][0]
+                name_table = S_F_W('name_table_question', 'Surveys', f'code = {message.text}')[0][0]
                 first_q = S_F(['question', 'type', 'answers', 'id'], name_table)[0]
                 i.q = name_table
                 if first_q[1] == 'write':

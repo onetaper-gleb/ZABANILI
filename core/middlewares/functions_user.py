@@ -1,5 +1,6 @@
 import datetime
 import sqlite3
+from random import randint
 
 
 def get_codes(code):
@@ -75,6 +76,44 @@ def adminer(tg):
     return False
 
 
-print(get_codes('1111'))
-name_table = S_F_W('name_table_question', 'Surveys', f'code = {str(1111)}')[0][0]
-print(S_F('question', name_table)[0][0])
+def db_append_2(sp_que, name):
+    name_table, code = make_new_tables()
+    print(name_table, code)
+    table_name = f'Questions_{name_table}'
+    con = sqlite3.connect('Questionnaire.db')
+    for i in sp_que:
+        cur = con.cursor()
+        count, q_type, que, answs, id_q, req_an = i
+
+        cur.execute(
+            f'''INSERT INTO {table_name}(id, type, question, answers, required_question, required_answer) VALUES('{count}', '{q_type}', '{que}', '{answs}', '{id_q}', '{req_an}')''')
+        con.commit()
+    cur = con.cursor()
+    cur.execute(
+        f"""INSERT INTO Surveys(id, name, name_table_question, name_table_answer, code) VALUES ('{name_table}', '{name}', 'Questions_{name_table}', 'Answers_{name_table}', '{code}')"""
+    )
+    con.commit()
+    con.close()
+    return code
+
+
+def make_new_tables():
+    db = sqlite3.connect('Questionnaire.db')
+    cursor = db.cursor()
+    names = """SELECT name FROM sqlite_master  
+      WHERE type='table';"""
+    cursor.execute(names)
+    em = cursor.fetchall()
+    mmm = 0
+    for x in em:
+        if '_' in x[0] and x[0][x[0].find('_') + 1].isdigit():
+            mmm = max(mmm, int(x[0][x[0].find('_') + 1:]))
+    mmm += 1
+    print(f"Answers_{mmm}")
+    print(f"Questions_{mmm}")
+    cursor.execute(
+        f"""CREATE TABLE Questions_{mmm} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, question TEXT, answers TEXT, required_question TEXT, required_answer TEXT) """)
+    cursor.execute(
+        f"""CREATE TABLE Answers_{mmm} (id INTEGER PRIMARY KEY AUTOINCREMENT, user_name TEXT, user_organization TEXT, user_answers TEXT, poll_datetime TEXT) """)
+    code = randint(1000, 10000)
+    return mmm, code
