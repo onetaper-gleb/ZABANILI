@@ -58,6 +58,7 @@ def find_q_1(id, iq):
 def db_append(iq, user_answers, user_name=''):
     con = sqlite3.connect('./Questionnaire.db')
     cur = con.cursor()
+    print(iq)
     k = cur.execute(f'''SELECT id FROM {iq}''').fetchall()
     kol_qu = len(k)
     us_an = []
@@ -67,7 +68,7 @@ def db_append(iq, user_answers, user_name=''):
         else:
             us_an.append('None')
 
-    cur.execute(f'''INSERT INTO Answers_1(user_answers, user_name, poll_datetime) VALUES('{'_-_'.join(us_an)}', '{user_name}', '{datetime.datetime.now()}')''')
+    cur.execute(f'''INSERT INTO Answers_{iq.split('_')[-1]}(user_answers, user_name, poll_datetime) VALUES('{'_-_'.join(us_an)}', '{user_name}', '{datetime.datetime.now()}')''')
     con.commit()
 
 

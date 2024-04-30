@@ -153,7 +153,10 @@ async def view_call(call: CallbackQuery, users):
             ans = S_F(['id', 'question', 'answers'], i.q)
             ans_2 = []
             for i in ans:
-                ans_2.append(f'{i[0]}. {i[1]}: Ответы: {", ".join(i[2].split("_-_"))}')
+                if i[2] != None:
+                    ans_2.append(f'{i[0]}. {i[1]}: Ответы: {", ".join(i[2].split("_-_"))}')
+                else:
+                    ans_2.append(f'{i[0]}. {i[1]}: Ответы: {i[2]}')
             await call.message.answer('\n'.join(ans_2))
             await call.message.answer_photo(photo=FSInputFile(
             path='Table.png'
