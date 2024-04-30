@@ -43,7 +43,7 @@ def get_table_pic(dannie: list):
     for s in sled:
         if s[-2]:
             dot.node(str(s[0]), s[2])
-            if s[-1]:
+            if s[-1] or s[-1] == None:
                 dot.edge(s[-2], str(s[0]), s[-1])
             else:
                 dot.edge(s[-2], str(s[0]), 'Выбор')

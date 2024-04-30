@@ -129,12 +129,15 @@ async def mes_poll(message: Message, users):
             answere = []
             ansere = []
             for j in i.poll:
+                print(j)
                 if j[4] != 'None':
-                    answere.append([str(j[0]), str(j[4]), j[5]])
+                    answere.append([str(j[2]), str(j[4]), j[5]])
+                else:
+                    answere.append([str(j[0]), 'start', j[5]])
                 ansere.append(f'{j[0]}. {j[2]}, Ответы: {", ".join(j[3].split("_-_"))}')
-            print(answere)
+            # print(answere, 11111111111111111111)
             get_table_pic(answere)
-            print(i.poll)
+            # print(i.poll)
             await message.answer('\n'.join(ansere))
             await message.answer_photo(photo=FSInputFile(
             path='Table.png'
